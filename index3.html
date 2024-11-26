@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Northern Railway - Travelling Allowance Journal</title>
+    <style>
+        /* General Body Styling */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #3498db, #8e44ad);
+            height: 100vh;
+            overflow-x: hidden;
+        }
+
+        #header {
+            text-align: center;
+            color: red;
+            font-size: 30px;
+            margin-top: 20px;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 20px auto;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            color: #2c3e50;
+        }
+
+        h2 {
+            text-align: center;
+            color: #e74c3c;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            background-color: rgba(255, 255, 255, 0.8);
+        }
+
+        button {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+            color: white;
+            transition: all 0.3s ease;
+            background: linear-gradient(45deg, #3498db, #2ecc71);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Accordion Buttons */
+        .accordion-button {
+            width: 100%;
+            text-align: left;
+            padding: 15px;
+            font-size: 18px;
+            cursor: pointer;
+            background: linear-gradient(45deg, #1abc9c, #3498db);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+
+        .accordion-button:hover {
+            background: linear-gradient(45deg, #16a085, #2980b9);
+        }
+
+        .accordion-content {
+            padding: 20px;
+            display: none;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 5px;
+            margin-top: 10px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 15px;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background: rgba(52, 152, 219, 0.8);
+            color: white;
+        }
+
+        /* Make employee table scrollable */
+        #employee-table {
+            max-height: 300px;
+            overflow-y: auto;
+            display: block;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        #railway-logo {
+            position: fixed;
+            top: 10px;
+            right: 20px;
+            width: 100px;
+            height: auto;
+            z-index: 1000;
+        }
+
+        .certification-section {
+            margin-top: 30px;
+            display: none; /* Hidden initially */
+        }
+
+        .certification-section h2 {
+            color: #2980b9;
+        }
+
+        .certification-section .form-group {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div id="header">
+        <h1>Northern Railway: Travelling Allowance Journal</h1>
+    </div>
+
+    <!-- Railway Logo from local folder -->
+    <img id="railway-logo" src="image/indian_railway_logo.png" alt="Indian Railway Logo">
+
+    <!-- Login Section -->
+    <div class="container" id="login-container">
+        <h2>Login</h2>
+        <div class="form-group">
+            <label for="username">Username:</label>
+            <input type="text" id="username" placeholder="Enter your username">
+        </div>
+        <div class="form-group">
+            <label for="password">Password:</label>
+            <input type="password" id="password" placeholder="Enter your password">
+        </div>
+        <button onclick="login()">Login</button>
+        <p id="login-error" style="color: red; text-align: center; display: none;">Invalid username or password!</p>
+    </div>
+
+    <!-- Main Section -->
+    <div class="container hidden" id="main-container">
+        <!-- Top Section -->
+        <button class="accordion-button" onclick="toggleAccordion('top-section')">Top Section</button>
+        <div id="top-section" class="accordion-content">
+            <h2>Top Section</h2>
+            <div class="form-group">
+                <label for="letter-no">Letter No.:</label>
+                <input type="text" id="letter-no" placeholder="e.g., GA-31/S.R.G/G-1677">
+            </div>
+            <div class="form-group">
+                <label for="serial-no">Serial No.:</label>
+                <input type="text" id="serial-no" placeholder="e.g., G-6">
+            </div>
+            <div class="form-group">
+                <label for="dept">Department:</label>
+                <input type="text" id="dept" placeholder="Enter Department">
+            </div>
+            <div class="form-group">
+                <label for="pf-no">PF No.:</label>
+                <input type="text" id="pf-no" placeholder="Enter PF Number">
+            </div>
+            <div class="form-group">
+                <label for="bill-unit-no">Bill Unit No.:</label>
+                <input type="text" id="bill-unit-no" placeholder="Enter Bill Unit No.">
+            </div>
+            <div class="form-group">
+                <label for="headquarters">Headquarters:</label>
+                <input type="text" id="headquarters" placeholder="Enter Headquarters">
+            </div>
+            <div class="form-group">
+                <label for="employee-name">Employee Name:</label>
+                <input type="text" id="employee-name" placeholder="Enter Employee Name">
+            </div>
+            <div class="form-group">
+                <label for="month-year">Month & Year:</label>
+                <input type="text" id="month-year" placeholder="Enter Month & Year">
+            </div>
+            <div class="form-group">
+                <label for="designation">Designation:</label>
+                <input type="text" id="designation" placeholder="Enter Designation">
+            </div>
+            <div class="form-group">
+                <label for="pay-level">Pay (Level of 7th CPC):</label>
+                <input type="text" id="pay-level" placeholder="Enter Pay Level">
+            </div>
+            <div class="form-group">
+                <label for="date-of-appointment">Date of Appointment:</label>
+                <input type="date" id="date-of-appointment">
+            </div>
+        </div>
+
+        <!-- Employee Table Section -->
+        <button class="accordion-button" onclick="toggleAccordion('employee-section')">Employee Table</button>
+        <div id="employee-section" class="accordion-content">
+            <h2>Employee Table</h2>
+            <div id="employee-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Month & Date</th>
+                            <th>Employee Name</th>
+                            <th>Train No.</th>
+                            <th>Station (From)</th>
+                            <th>Station (To)</th>
+                            <th>Kilometers</th>
+                            <th>Day/Night</th>
+                            <th>Journey Purpose</th>
+                            <th>Rate (₹)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="employee-table-body">
+                        <!-- Table rows will be added dynamically -->
+                    </tbody>
+                </table>
+            </div>
+            <button onclick="addRow()">Add Row</button>
+            <button onclick="clearTable()">Clear Table</button>
+        </div>
+
+        <!-- Certification Section Button -->
+        <button class="accordion-button" onclick="toggleAccordion('certification-section')">Certification</button>
+        <div id="certification-section" class="certification-section">
+            <h2>Certification</h2>
+            <div class="form-group">
+                <label for="certified-by">Certified By:</label>
+                <input type="text" id="certified-by" placeholder="Enter Certifying Officer Name">
+            </div>
+            <div class="form-group">
+                <label for="date-of-certification">Date of Certification:</label>
+                <input type="date" id="date-of-certification">
+            </div>
+            <div class="form-group">
+                <label for="designation-certification">Designation of Certifier:</label>
+                <input type="text" id="designation-certification" placeholder="Enter Certifier's Designation">
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <button onclick="printAllSections()">Print All Sections</button>
+        <button onclick="saveAsPDF()">Save as PDF</button>
+        <button onclick="generatePreview()">Generate Preview</button>
+    </div>
+
+    <script>
+        function login() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            if (username === 'sarvesh9119' && password === 'sarvesh@9119') {
+                document.getElementById('login-container').style.display = 'none';
+                document.getElementById('main-container').classList.remove('hidden');
+            } else {
+                document.getElementById('login-error').style.display = 'block';
+            }
+        }
+
+        function toggleAccordion(sectionId) {
+            const section = document.getElementById(sectionId);
+            section.style.display = section.style.display === 'block' ? 'none' : 'block';
+        }
+
+        function addRow() {
+            const table = document.getElementById('employee-table-body');
+            const row = table.insertRow();
+            row.innerHTML = `
+                <td><input type="date"></td>
+                <td><input type="text" placeholder="Name"></td>
+                <td><input type="text" placeholder="Train No."></td>
+                <td><input type="text" placeholder="From"></td>
+                <td><input type="text" placeholder="To"></td>
+                <td><input type="number" placeholder="Km"></td>
+                <td>
+                    <select>
+                        <option value="Day">Day</option>
+                        <option value="Night">Night</option>
+                    </select>
+                </td>
+                <td><input type="text" placeholder="Purpose"></td>
+                <td><input type="text" placeholder="Rate (₹)"></td>
+            `;
+        }
+
+        function clearTable() {
+            const table = document.getElementById('employee-table-body');
+            table.innerHTML = '';
+        }
+
+        function printAllSections() {
+            window.print();
+        }
+
+        function saveAsPDF() {
+            alert('PDF Saved (Mock Functionality)');
+        }
+
+        function generatePreview() {
+            alert('Preview Generated (Mock Functionality)');
+        }
+    </script>
+</body>
+</html>
